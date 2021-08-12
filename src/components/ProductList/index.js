@@ -7,6 +7,7 @@ import ProductListSection, {
 import { convertNumberToIdr } from '../../utils/convert';
 
 const Index = ({ title, data }) => {
+  const [storePrice, setStorePrice] = useState([]);
   const [quantity, setQuantity] = useState([]);
   const [subTotal, setSubTotal] = useState([]);
   const [total, setTotal] = useState();
@@ -14,12 +15,15 @@ const Index = ({ title, data }) => {
   useEffect(() => {
     const dataQuantity = [];
     const dataSubTotal = [];
+    const dataStorePrice = [];
     for (let i = 0; i < data.length; i++) {
       dataQuantity.push(1);
       dataSubTotal.push(data[i].product.price);
+      dataStorePrice.push(data[i].product.price);
     }
     setQuantity(dataQuantity);
     setSubTotal(dataSubTotal);
+    setStorePrice(dataStorePrice);
   }, [data]);
 
   useEffect(() => {
@@ -42,14 +46,14 @@ const Index = ({ title, data }) => {
       setSubTotal((oldState) => {
         const state = [...oldState];
         if (numberValue > quantity[index]) {
-          state[index] = numberValue * state[index];
+          state[index] = numberValue * storePrice[index];
         } else {
           state[index] = state[index] / quantity[index];
         }
         return state;
       });
     },
-    [quantity]
+    [storePrice, quantity]
   );
 
   return (
