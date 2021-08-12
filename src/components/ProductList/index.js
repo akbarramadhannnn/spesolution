@@ -48,7 +48,7 @@ const Index = ({ title, data }) => {
         if (numberValue > quantity[index]) {
           state[index] = numberValue * storePrice[index];
         } else {
-          state[index] = state[index] / quantity[index];
+          state[index] = (state[index] / quantity[index]) * numberValue;
         }
         return state;
       });
